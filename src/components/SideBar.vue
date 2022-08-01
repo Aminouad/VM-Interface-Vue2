@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
         <div class="title">
-            Menu
+        <div class="logoStyle"><img src="../assets/logo_Vm.png" /></div>
                         <i class="fa-solid fa-user"></i>
 
         </div>
@@ -37,11 +37,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .title {
+    flex-direction: column;
     color: white;
     font-size: 24px;
     margin-top: 10px;
-}
+    .logoStyle{
+        width: 100%;
+    }
+
+   } 
+
 .menu-items {
     display: flex;
     flex-direction: column;
