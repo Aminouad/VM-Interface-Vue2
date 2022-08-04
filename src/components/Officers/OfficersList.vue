@@ -1,84 +1,94 @@
 <template>
-    <table id="table">
-        <!-- <thead>
+  <div>
+    <section>
+      <base-dialog
+        :show="!!error"
+        title="An error occurred!"
+        @close="handleError"
+      >
+        <p>{{ error }}</p>
+      </base-dialog>
+      <base-dialog :show="isLoading" title="" fixed>
+        <base-spinner></base-spinner>
+      </base-dialog>
+    </section>
+    <div class="list-officer">
+      <div class="controls">
+        <base-button class="button" mode="outline" @click="loadOfficers()"
+          >Refresh</base-button
+        >
+        <div class="search">
+          <input
+            type="text"
+            class="search-input"
+            v-model="search"
+            placeholder="Filtrez vos recherches..."
+          />
+          <br />
+        </div>
+        <base-button mode="outline" class="button" link to="/addCompany"
+          >Ajouter un officer</base-button
+        >
+      </div>
+      <table id="table">
+        <thead>
           <tr class="table-hader">
             <th><i class="fa-solid fa-building-user"></i> Nom</th>
             <th><i class="fa-solid fa-address-book"></i> Email</th>
             <th><i class="fa-solid fa-phone"></i> Téléphone</th>
-            <th><i class="fa-solid fa-location-dot"></i> Address</th>
             <th><i class="fa-solid fa-clock-rotate-left"></i> Date d'ajout</th>
             <th class="actions-field">
               <i class="fa-solid fa-sliders"></i> Actions
             </th>
           </tr>
-        </thead> -->
-        <slot name="thead">
-
-        </slot>
-        <slot name="tbody">
-
-        <!-- <tbody>
+        </thead>
+        <tbody>
           <tr
             class="row"
-            v-for="item in data"
-            :key="item.id"
+            v-for="officer in filteredOfficers"
+            :key="officer.id"
           >
-            <td>{{ item.name }}</td>
-            <td>{{ item.contact }}</td>
-            <td>{{ item.phone }}</td>
-            <td>{{ item.address }}</td>
-            <td>{{ item.date }}</td>
+            <td>{{ officer.name }}</td>
+            <td>{{ officer.email }}</td>
+            <td>{{ officer.phone }}</td>
+            <td>{{ officer.date }}</td>
             <td class="actions">
               <base-button
-                @click="toggleDeleteModal(company.id)"
+                @click="toggleDeleteModal(officer.id)"
                 class="deleteButton"
               >
                 <i class="fa-solid fa-trash"></i>
               </base-button>
             </td>
           </tr>
-        </tbody> -->
-                </slot>
-
-        <!-- <div>
+        </tbody>
+        <div>
           <base-dialog
             title="Suppression de document..."
             :show="showDeletePopUp"
             :confirm="true"
             @close="toggleDeleteModal"
-            @actionTask="deleteCompany()"
+            @actionTask="deleteOfficer()"
           >
             <div>
               <p style="color: #ff130d; display: flex; justify-content: center">
-                Etes-vous sûr de vouloir supprimer ce {{entity}} ?
+                Etes-vous sûr de vouloir supprimer cet élément ?
               </p>
             </div>
           </base-dialog>
-        </div> -->
+        </div>
       </table>
-</template>
-<script>
-export default {
-      props: {
-    data: {
-      type: Object,
-      required: true,
-    },
-    entity: {
-      type: String,
-      required: false,
-    },
-    fixed: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    confirm: {
-      type: Boolean,
-      required: false,
-    },
-  },
 
+      <ul v-if="hasOfficers"></ul>
+      <h3 v-else>Aucun officier trouvé</h3>
+    </div>
+  </div>
+</template>
+
+<script>
+import SearchMixins from "@/components/mixins/searchMixin";
+export default {
+  mixins: [SearchMixins],
   data() {
     return {
       search: "",
@@ -90,11 +100,11 @@ export default {
   },
   created() {
     console.log("test");
-    this.loadCompanies();
+    this.loadOfficers();
   },
   computed: {
-    filteredCompanies() {
-      return this.filterData(this.$store.getters["companies/companies"]);
+    filteredOfficers() {
+      return this.filterData(this.$store.getters["officers/officers"]);
       /*
       return this.$store.getters["companies/companies"].filter((p) => {
         return (
@@ -106,26 +116,26 @@ export default {
       });
       */
     },
-    hasCompanies() {
-      return this.$store.getters["companies/hasCompanies"];
+    hasOfficers() {
+      return this.$store.getters["officers/hasOfficers"];
     },
   },
   methods: {
-    async loadCompanies() {
+    async loadOfficers() {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("companies/loadCompanies");
+        await this.$store.dispatch("officers/loadOfficers");
       } catch (error) {
         this.error = error.message || "Une erreur s'est produite";
       }
       this.isLoading = false;
-      console.log(this.$store.dispatch("companies/loadCompanies"));
+      console.log(this.$store.dispatch("officers/loadOfficers"));
     },
     handleError() {
       this.error = null;
     },
-    deleteCompany() {
-      this.$store.dispatch("companies/deleteCompany", this.id);
+    deleteOfficer() {
+      this.$store.dispatch("officers/deleteOfficer", this.id);
       this.showDeletePopUp = !this.showDeletePopUp;
     },
     toggleDeleteModal(data) {
@@ -142,7 +152,7 @@ export default {
   size-adjust: auto;
 }
 
-.list-company {
+.list-officer {
   margin-inline: 1em;
   border-radius: 1px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.059);
