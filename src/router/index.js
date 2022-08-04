@@ -1,53 +1,58 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Dashboard from '../views/DashboardPage.vue'
-import UserAuthentication from '@/views/UserAuthentication.vue'
-import Messages from '@/views/MessagesPage.vue'
-import Settings from '@/views/SettingsPage.vue'
-import Profile from '@/views/ProfilePage.vue'
-import Overview from '@/views/OverviewPage.vue'
+import Vue from "vue";
+import Router from "vue-router";
+import Dashboard from "../views/DashboardView.vue";
+import UserAuthentication from "@/views/UserAuthentication.vue";
+import CompaniesView from "@/views/Companies/CompaniesView.vue";
+import AddCompany from "@/views/Companies/AddCompany.vue";
+import VisitsView from "@/views/Visits/VisitsView.vue";
+import AddVisit from "@/views/Visits/AddVisit.vue";
+import HomeView from "@/views/HomeView.vue";
 
-
-
-Vue.use(Router)
+Vue.use(Router);
 
 const routes = [
- {
-  path: '',
-  component: Dashboard,
-  children: [
-    {
-      path: '',
-      name:'overview',
-      component: Overview
-    },
-    {
-      path: 'messages',
-      name:'messages',
-      component: Messages
-    },
-    {
-      path: 'profile',
-      name:'profile',
-      component: Profile    },
-    {
-      path: 'settings',
-      name:'settings',
-      component:Settings    }
-  ]
+  {
+    path: "",
+    component: Dashboard,
+    children: [
+      {
+        path: "",
+        name: "home",
+        component: HomeView,
+      },
+      {
+        path: "companies",
+        name: "Companies",
+        component: CompaniesView,
+      },
+      {
+        path: "addCompany",
+        name: "AddCompany",
+        component: AddCompany,
+      },
+      {
+        path: "addVisit",
+        name: "AddVisit",
+        component: AddVisit,
+      },
+      {
+        path: "visits",
+        name: "Visits",
+        component: VisitsView,
+      },
+    ],
   },
   {
-    path: '/auth',
-    name: 'authentication',
-    component:UserAuthentication
+    path: "/authentication",
+    name: "authentication",
+    component: UserAuthentication,
   },
-  
-]
+];
 
 const router = new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

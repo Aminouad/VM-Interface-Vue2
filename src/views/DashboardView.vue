@@ -8,10 +8,12 @@
 </template>
 
 <script>
-import Sidebar from '../components/SideBar'
+import Sidebar from '../components/SideBar';
+
 export default {
     components: {
-        Sidebar
+        Sidebar,
+        
     }
 }
 </script>
@@ -20,7 +22,7 @@ export default {
 .dashboard {
     display: grid;
     grid-template-columns: 1fr 5fr;
-    background-color: #a3c3d7;
+    background-color: #53bdff;
     height: 100vh;
     width: 100vw;
 }

@@ -42,8 +42,8 @@
 export default {
   data() {
     return {
-      email: "amin@neoledge.com",
-      password: "string",
+      email: "",
+      password: "",
       formIsValid: true,
       isLoading: false,
       error: null,
@@ -66,7 +66,10 @@ export default {
         password: this.password,
       };
       try {
-        await this.$store.dispatch("login", loginPayload);
+        console.log(loginPayload);
+       await this.$store.dispatch("login", loginPayload);
+       this.$router.push("/");
+
       } catch (err) {
         if (err.message === "Network Error") {
           this.error = "Problème de serveur.Veuillez réessayer plus tard.  ";
@@ -77,7 +80,6 @@ export default {
       }
       this.isLoading = false;
       //console.log(this.$store.getters.token);
-      this.$router.push("/");
     },
     handleError() {
       this.error = null;

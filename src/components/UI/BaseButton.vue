@@ -1,5 +1,5 @@
 <template>
-    <button v-if="!link" :class="mode">
+    <button v-if="!link" :class="mode" @click="click">
         <slot></slot>
         
     </button>
@@ -10,6 +10,7 @@
 
 <script>
 export default {
+    emits: ["click"],
     props: {
         mode: {
            type:String,
@@ -26,6 +27,12 @@ export default {
             required: false,
             default:'/'
         }
+    },
+    methods: {
+      click() {
+      
+      this.$emit("click");
+    },
     }
 }
 </script>
@@ -36,7 +43,7 @@ a {
   text-decoration: none;
   padding: 0.4rem 1rem;
   font: inherit;
-  background-color: #4bc5f502;
+  background-color: #4bc5f5;
   border: 0.1px solid #ffffff52;
   color: white;
   cursor: pointer;
@@ -49,7 +56,7 @@ a:active,
 button:hover,
 button:active {
   background-color: #ffffff9c;
-  border-color: #4bc5f502;
+  border-color: #4bc5f5;
   color: rgb(75, 197, 245) ;
 }
 .flat {
@@ -58,15 +65,17 @@ button:active {
   border: none;
 }
 .outline {
-  background-color: transparent;
-  border-color: #4bc5f502;
-  color: #4bc5f502;
+  background-color: #4bc5f5;
+  border-color: #00b7ff;
+  color: #ffffff;
 }
 .flat:hover,
 .flat:active,
 .outline:hover,
 .outline:active {
-  background-color: #4bc5f502;
+  background-color: #4bc5f5;
     color: #ffffff;
+
+
 }
 </style>

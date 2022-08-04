@@ -1,11 +1,11 @@
 <template>
-  <teleport to="body" >
+  <div to="body">
     <div v-if="show" @click="tryClose" class="backdrop"></div>
     <transition name="dialog" @click.stop>
-      <dialog open v-if="show" :class="{'transparent-background':!title}">
+      <dialog open v-if="show" :class="{ 'transparent-background': !title }">
         <header v-if="title">
           <slot name="header">
-            <h2>{{ title }}</h2> 
+            <h2>{{ title }}</h2>
             <!-- <base-button @click="tryClose">Close</base-button> -->
           </slot>
         </header>
@@ -14,13 +14,15 @@
         </section>
         <menu v-if="!fixed">
           <slot name="actions">
-             <base-button   class="button" @click="actionTask" v-if="confirm" >Confirmer</base-button>
-            <base-button  class="button" @click="tryClose">Fermer</base-button>
+            <base-button class="button" @click="actionTask" v-if="confirm"
+              >Confirmer</base-button
+            >
+            <base-button class="button" @click="tryClose">Fermer</base-button>
           </slot>
         </menu>
       </dialog>
     </transition>
-  </teleport>
+  </div>
 </template>
 
 <script>
@@ -44,10 +46,12 @@ export default {
       required: false,
     },
   },
-  emits: ["close","actionTask"],
+  emits: ["close", "actionTask"],
   methods: {
     tryClose() {
       if (this.fixed) {
+        console.log("emit modal");
+
         return;
       }
       this.$emit("close");
@@ -57,15 +61,35 @@ export default {
         return;
       }
       this.$emit("actionTask");
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
-.button{
-    margin-inline: 0.2rem;
-
+.button {
+  margin-inline: 0.2rem;
+}
+button,
+a {
+  text-decoration: none;
+  padding: 0.4rem 1rem;
+  font: inherit;
+  background-color: #4bc5f5;
+  border: 0.1px solid #ffffff52;
+  color: white;
+  cursor: pointer;
+  border-radius: 3px;
+  display: inline-block;
+font-size: 70%;
+}
+a:hover,
+a:active,
+button:hover,
+button:active {
+  background-color: #ffffff9c;
+  border-color: #4bc5f5;
+  color: rgb(75, 197, 245) ;
 }
 .backdrop {
   position: fixed;
@@ -92,13 +116,13 @@ dialog {
   background-color: white;
 }
 
-.transparent-background{
+.transparent-background {
   background-color: transparent;
   box-shadow: none;
 }
 
 header {
-  background-color: #00b1b2;
+  background-color: #4bc5f5;
   color: white;
   width: 100%;
   padding: 1rem;
