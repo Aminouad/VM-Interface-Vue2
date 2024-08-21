@@ -1,24 +1,2 @@
-# mini-projet
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* The Visit Management project is a web application that manages visits to a business park.
+* The VM project consists of a .NET backend and an interface developed with Vue 2.
